@@ -7,10 +7,11 @@ socket.on('connect', function () {
   //     to: 'jen@example.com',
   //     text: 'Hey. This is Andrew.'
   // });
-  socket.emit('MsjServidor', {
-    from: 'Andrew',
-    text: 'Yup, that works for me.'
-  });
+
+  // socket.emit('MsjServidor', {//Emite un evento a una conexion simple
+  //   from: 'Andrew',
+  //   text: 'Yup, that works for me.'
+  // });
 });
 
 socket.on('disconnect', function () {
@@ -22,5 +23,10 @@ socket.on('disconnect', function () {
 // });
 socket.on('MsjCliente', function (mensaje) {
   console.log('Msj del Cliente al Servidor', mensaje);
+  // io.emit('MsjServidor', {//Emite un evento a cada conexion
+  //   from: mensaje.from,
+  //   text: mensaje.text,
+  //   createdAt: new Date().getTime()
+  // });
 });
 //Conectar lado servidor ------------

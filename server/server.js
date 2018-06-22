@@ -21,14 +21,20 @@ io.on('connection', (socket) => {
   //   createAt: 123
   // });
 
-  socket.emit('MsjCliente', {
-    from: 'John',
-    text: 'See you then.',
-    createAt: 123123
-  });
+  // socket.emit('MsjCliente', {
+  //   from: 'John',
+  //   text: 'See you then.',
+  //   createAt: 123123
+  // });
 
   socket.on('MsjServidor', (mensaje) => {
     console.log('Msj del servidor al cliente', mensaje);
+
+    io.emit('MsjCliente', {//Emite un evento a cada conexion
+      from: mensaje.from,
+      text: mensaje.text,
+      createdAt: new Date().getTime()
+    });
   });
 
   socket.on('disconnect', () => {
