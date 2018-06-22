@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "10.2.1"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/zphoenixz/chatSocketIO/issues"
   },
-  "homepage": "https://github.com/zphoenixz/chatSocketIO#readme"
+  "homepage": "https://github.com/zphoenixz/chatSocketIO#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
