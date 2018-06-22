@@ -11,14 +11,31 @@ var io = socketIO(server);
 
 app.use(express.static(publicPath));
 
-//Evento en el cliente---
-io.on('connection', (socket) => {//registrar un event listener, nueva conexion
+//Conectar lado servidor ------------
+io.on('connection', (socket) => {
   console.log('New user connected');
+
+  // socket.emit('EmailCliente', {
+  //   from: 'mike@example.com',
+  //   text: 'Hey. What is going on.',
+  //   createAt: 123
+  // });
+
+  socket.emit('MsjCliente', {
+    from: 'John',
+    text: 'See you then.',
+    createAt: 123123
+  });
+
+  socket.on('MsjServidor', (mensaje) => {
+    console.log('Msj del servidor al cliente', mensaje);
+  });
+
   socket.on('disconnect', () => {
     console.log('User was disconnected');
   });
 });
-//Evento en el cliente---
+//Conectar lado servidor ------------
 server.listen(port, () => {
   console.log(`Server is up on ${port}`);
 });
