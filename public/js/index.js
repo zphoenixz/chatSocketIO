@@ -9,17 +9,19 @@ socket.on('disconnect', function () {
 });
 //--
 socket.on('newMessage', function (mensaje) {
-  console.log('Msj del Cliente al Servidor', mensaje);
+  // console.log('Msj del Cliente al Servidor', mensaje);
+  var formattedTime = moment(mensaje.createdAt).format('h:mm a');
   var li = jQuery('<li></li>');//Listar dentro de la "ol" cada "li"
-  li.text(`${mensaje.from}: ${mensaje.text}`);
+  li.text(`${mensaje.from} ${formattedTime}: ${mensaje.text}`);
   jQuery('#messages1').append(li);
 });
 //--
 socket.on('newLocationMessage', function (mensaje) {
+  var formattedTime = moment(mensaje.createdAt).format('h:mm a');
   var li = jQuery('<li></li>');
   var a = jQuery('<a target="_blank">My ubicación actual</a>');
 
-  li.text(`${mensaje.from}: `);
+  li.text(`${mensaje.from} ${formattedTime}: `);
   a.attr('href', mensaje.url);
   li.append(a);
   jQuery('#messages1').append(li);
