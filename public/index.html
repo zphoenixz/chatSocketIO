@@ -2,19 +2,33 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
-  <p>Welcome to the chat app</p>
+<body class="chat">
+  
+  <div class="chat__sidebar">
+    <h3>Personas</h3>
+    <div id="users"></div>
+  </div>
 
-  <ol id="messages1"></ol>
+  <div class="chat__main">
+    <ol id="messages1" class="chat__messages"></ol>
+    
+    <div class="chat__footer">
+      <form id="message-form">
+        <input name="message1" type="text" placeholder="Mensaje"
+                autofocus autocomplete="off"/>
+        <button>Enviar</button>
+      </form>
+      <button id="send-location">Enviar Ubicación</button>
+    </div>
+      
+  </div>
 
-  <form id="message-form">
-    <input name="message1" type="text" placeholder="Mensaje"/>
-    <button>Enviar</button>
-  </form>
 
-  <button id="send-location">Enviar Ubicación</button>
+
+
 
   <script src="/socket.io/socket.io.js"></script><!-- El script de sockt.io-->
   <script src="/js/libs/jquery-3.3.1.min.js"></script> <!-- Script de jquery, Este debe estar antes -->

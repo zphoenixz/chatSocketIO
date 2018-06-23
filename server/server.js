@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
   socket.on('createMessage', (mensaje, callback) => {//Recibir un callback Acknowledgement
     console.log('Msj del servidor al cliente', mensaje);
     io.emit('newMessage', generarMensaje( mensaje.from, mensaje.text));//Manda el msj a todas las conexiones
-    callback('This is from the server.');
+    callback();
   });
 
   socket.on('createLocationMessage', (coords) => {

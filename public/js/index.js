@@ -30,13 +30,14 @@ socket.on('newLocationMessage', function (mensaje) {
 jQuery('#message-form').on('submit', function(e) {
   e.preventDefault();//Previene que aparezca el mensaje en el buscador = http://localhost:3000/?message=hola
   
+  var messageTextbox = jQuery('[name=message1]');
+
   socket.emit('createMessage', {
     from: 'User',
-    text: jQuery('[name=message1]').val()
+    text: messageTextbox.val()
   }, function (){
-
+    messageTextbox.val('');
   });  
-  jQuery('[name=message1]').val("");
 });
 //--
 var BotonUbicacion = jQuery('#send-location');
@@ -45,14 +46,16 @@ BotonUbicacion.on('click', function (){//Cuando se haga click en el boton de ubi
   if(!navigator.geolocation){
     return alert('Geolocalizacion no soportada por tu Navegador');
   }
-
+  BotonUbicacion.attr('disabled', 'disabled').text('Enviando ubicación...');//desactivo el boton mientras se manda la ubicacion
   navigator.geolocation.getCurrentPosition(function (position) {
     //console.log(position);
+    BotonUbicacion.removeAttr('disabled').text('Enviar Ubicación');//activo el boton una vez se mando
     socket.emit('createLocationMessage', {
       latitud: position.coords.latitude,
       longitud: position.coords.longitude
     });
   }, function () {
+    BotonUbicacion.removeAttr('disabled').text('Enviar Ubicación');//activo el boton si fallo el envio
     alert('No se pudo obtener la ubicacion');
   })
 });//--
