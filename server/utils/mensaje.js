@@ -7,4 +7,11 @@ var generarMensaje = (from, text) => {
     };
 };
 
-module.exports = {generarMensaje};
+var generarMensajeGeolocalizado = (from, latitud, longitud) => {
+    return {
+        from,
+        url: `https://www.google.com/maps?q=${latitud},${longitud}`,
+        createdAt: new Date().getTime()
+    };
+};
+module.exports = {generarMensaje, generarMensajeGeolocalizado};
