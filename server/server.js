@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generarMensaje} = require('./utils/mensaje');
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
@@ -14,27 +15,16 @@ app.use(express.static(publicPath));
 //Conectar lado servidor ------------
 io.on('connection', (socket) => {
   console.log('New user connected');
+  //Mensaje solo a la conexion actual
+  socket.emit('MsjAlCliente', generarMensaje('Admin', 'Bienvenido a la sala de chat'));
+  //Mensaje de para todos de que hay un nuevo ususario, menos para la 
+  //conexion actual--.-.-.-.-
+  socket.broadcast.emit('MsjAlCliente', generarMensaje('Admin', 'Un nuevo usuario se ha unido'));
 
-  // socket.emit('EmailCliente', {
-  //   from: 'mike@example.com',
-  //   text: 'Hey. What is going on.',
-  //   createAt: 123
-  // });
-
-  // socket.emit('MsjCliente', {
-  //   from: 'John',
-  //   text: 'See you then.',
-  //   createAt: 123123
-  // });
-
-  socket.on('MsjServidor', (mensaje) => {
+  socket.on('MsjAlServidor', (mensaje, callback) => {//Recibir un callback Acknowledgement
     console.log('Msj del servidor al cliente', mensaje);
-
-    io.emit('MsjCliente', {//Emite un evento a cada conexion
-      from: mensaje.from,
-      text: mensaje.text,
-      createdAt: new Date().getTime()
-    });
+    io.emit('MsjAlCliente', generarMensaje( mensaje.from, mensaje.text));//Manda el msj a todas las conexiones
+    callback('This is from the server.');
   });
 
   socket.on('disconnect', () => {
