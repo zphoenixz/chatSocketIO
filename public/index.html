@@ -25,14 +25,37 @@
     </div>
       
   </div>
-
-
-
-
+<!-- Para el estilo y agregar mensajes-->
+  <script id="message-template" type="text/template">
+    <li class=message>
+      <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{createdAt}}</span>
+      </div>
+      <div class="message__body">
+          <p>{{texto}}</p>
+      </div>
+    </li>
+  </script>
+<!-- Para el estilo  agregar mensaje de ubicacion -->
+  <script id="location-message-template" type="text/template">
+    <li class=message>
+      <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{createdAt}}</span>
+      </div>
+      <div class="message__body">
+          <p>
+            <a href="{{url}}" target="_blank">Mi ubicación actual</a>
+          </p>
+      </div>
+    </li>
+  </script>
 
   <script src="/socket.io/socket.io.js"></script><!-- El script de sockt.io-->
   <script src="/js/libs/jquery-3.3.1.min.js"></script> <!-- Script de jquery, Este debe estar antes -->
   <script src="/js/libs/moment.js"></script> 
+  <script src="/js/libs/mustache.js"></script> 
   <script src="/js/index.js"></script><!-- Este debe estar despues -->
   
 </body>
