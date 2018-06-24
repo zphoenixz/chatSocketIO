@@ -1,63 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
+  <title>Join | ChatApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="chat">
-  
-  <div class="chat__sidebar">
-    <h3>Personas</h3>
-    <div id="users"></div>
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form action="/chat.html">
+      <div class="form-field">
+        <h3>Unirse a un Chat<h3>
+      </div>
+      <div class="form-field">
+        <label>Nickname</label>
+        <input type="text" name="name" autofocus/><!-- nombre nickname -->
+      </div>
+      <div class="form-field">
+        <label>Room name</label>
+        <input type="text" name="room"/><!-- nombre room -->
+      </div>
+      <div class="form-field">
+        <button>Unirse</button>
+      </div>
+    </form>
   </div>
-
-  <div class="chat__main">
-    <ol id="messages1" class="chat__messages"></ol>
-    
-    <div class="chat__footer">
-      <form id="message-form">
-        <input name="message1" type="text" placeholder="Mensaje"
-                autofocus autocomplete="off"/>
-        <button>Enviar</button>
-      </form>
-      <button id="send-location">Enviar Ubicación</button>
-    </div>
-      
-  </div>
-<!-- Para el estilo y agregar mensajes-->
-  <script id="message-template" type="text/template">
-    <li class=message>
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-      </div>
-      <div class="message__body">
-          <p>{{texto}}</p>
-      </div>
-    </li>
-  </script>
-<!-- Para el estilo  agregar mensaje de ubicacion -->
-  <script id="location-message-template" type="text/template">
-    <li class=message>
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-      </div>
-      <div class="message__body">
-          <p>
-            <a href="{{url}}" target="_blank">Mi ubicación actual</a>
-          </p>
-      </div>
-    </li>
-  </script>
-
-  <script src="/socket.io/socket.io.js"></script><!-- El script de sockt.io-->
-  <script src="/js/libs/jquery-3.3.1.min.js"></script> <!-- Script de jquery, Este debe estar antes -->
-  <script src="/js/libs/moment.js"></script> 
-  <script src="/js/libs/mustache.js"></script> 
-  <script src="/js/index.js"></script><!-- Este debe estar despues -->
-  
 </body>
 
 </html>

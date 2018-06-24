@@ -1,11 +1,46 @@
 var socket = io();
+
+function scrollToBottom(){
+  //Selectors
+  var messages = jQuery('#messages1');
+  var newMessage = messages.children('li:last-child');//El ultimo hijo (mensaje) que se agrega a "li"
+  //Heights
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+  if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
+    messages.scrollTop(scrollHeight);
+  }
+}
 //--
-socket.on('connect', function () {
-  console.log('Connected to server');
+socket.on('connect', function () { //Un usuario se conecta---------
+  //console.log('Connected to server');
+  var params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params, function (err) {//para los parametros de join
+    if(err){
+      alert(err);
+      window.location.href = '/';
+    }else{
+      console.log('No error');
+    }
+  });
 });
 //--
-socket.on('disconnect', function () {
+socket.on('disconnect', function () {//Un usuario se desconecta---------------
   console.log('Disconnected from server');
+});
+//--
+socket.on('updateUserList', function (users) {//Se actualiza la lista de usuarios en linea---------------
+  console.log('Lista de usuarios', users);
+  var ol = jQuery('<ol></ol>');
+
+  users.forEach(function(user) {
+    ol.append(jQuery('<li></li>').text(user));
+  });
+  jQuery('#users').html(ol);
 });
 //--
 socket.on('newMessage', function (mensaje) {
@@ -18,6 +53,7 @@ socket.on('newMessage', function (mensaje) {
   });
 
   jQuery('#messages1').append(html);
+  scrollToBottom();
 });
 //--
 socket.on('newLocationMessage', function (mensaje) {
@@ -30,7 +66,7 @@ socket.on('newLocationMessage', function (mensaje) {
   });
 
   jQuery('#messages1').append(html);
-
+  scrollToBottom();
 });
 
 
@@ -41,7 +77,6 @@ jQuery('#message-form').on('submit', function(e) {
   var messageTextbox = jQuery('[name=message1]');
 
   socket.emit('createMessage', {
-    from: 'User',
     text: messageTextbox.val()
   }, function (){
     messageTextbox.val('');
